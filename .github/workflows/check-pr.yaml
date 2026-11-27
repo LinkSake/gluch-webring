@@ -1,9 +1,10 @@
-# Builds every pull request without deploying it. The build validates
+# Builds every pull request (or a manual run) without deploying it. The build validates
 # data/members.yaml (slugs, names, https URLs), so a bad entry fails here.
 name: Check pull request
 
 on:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
