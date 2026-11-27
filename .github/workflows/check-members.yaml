@@ -1,0 +1,19 @@
+# Weekly check that every member is online and shows the ring's widget.
+# Keeps one issue labeled "webring-check" with the results.
+name: Member check
+
+on:
+  schedule:
+    - cron: "17 15 * * 1" # Mondays, 15:17 UTC (08:17 in Chihuahua)
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: LinkSake/hugo-webring/.github/actions/check-members@v1.0.0
+        with:
+          ring-url: https://linksake.github.io/gluch-webring/

@@ -1,0 +1,34 @@
+# Builds every pull request without deploying it. The build validates
+# data/members.yaml (slugs, names, https URLs), so a bad entry fails here.
+name: Check pull request
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: .tool-versions
+          cache: false
+
+      - name: Install Hugo
+        run: |
+          version="$(awk '$1 == "hugo" { print $2 }' .tool-versions)"
+          archive="hugo_${version}_linux-amd64.tar.gz"
+          base="https://github.com/gohugoio/hugo/releases/download/v${version}"
+          cd "$RUNNER_TEMP"
+          curl -sSLO "$base/$archive"
+          curl -sSL "$base/hugo_${version}_checksums.txt" | grep " ${archive}\$" | sha256sum -c -
+          sudo tar -C /usr/local/bin -xzf "$archive" hugo
+
+      - name: Build
+        run: hugo build --gc --minify

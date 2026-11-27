@@ -1,0 +1,54 @@
+name: Unirme al anillo
+description: Pide que agreguemos tu sitio al GLUCH Webring (si no quieres abrir un pull request).
+title: "Alta: "
+labels: ["alta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por querer sumarte. Revisa los requisitos en la página del anillo
+        antes de enviar esto. Cuando agreguemos tu sitio, copia tu widget desde
+        la página del anillo y pégalo en tu sitio.
+  - type: input
+    id: name
+    attributes:
+      label: Nombre del sitio
+      placeholder: Mi blog
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL del sitio (con https)
+      placeholder: https://ejemplo.com/
+    validations:
+      required: true
+  - type: input
+    id: slug
+    attributes:
+      label: Slug
+      description: Identificador corto y permanente. Solo a-z, 0-9 y guiones.
+      placeholder: mi-blog
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Autor (opcional)
+      placeholder: Tu nombre o alias
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción corta (opcional)
+      description: Una o dos líneas sobre tu sitio.
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Requisitos
+      options:
+        - label: Soy parte de la comunidad del GLUCH.
+          required: true
+        - label: Mi sitio tiene contenido propio y no es puramente comercial.
+          required: true
+        - label: Pondré el widget del anillo en una página visible de mi sitio.
+          required: true
