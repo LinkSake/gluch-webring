@@ -1,0 +1,22 @@
+baseURL = "https://linksake.github.io/gluch-webring/"
+title = "GLUCH Webring"
+locale = "es-MX"
+defaultContentLanguage = "es"
+disableKinds = ["taxonomy", "term"]
+
+[module]
+  [[module.imports]]
+    path = "github.com/LinkSake/hugo-webring"
+
+[params.webring]
+  name = "GLUCH Webring"
+  description = "El anillo de sitios personales de la comunidad del GLUCH, el Grupo de Usuarios de Linux Chihuahua: gente que usa, estudia y comparte Linux y software libre en Chihuahua desde 1996."
+  repo = "https://github.com/LinkSake/gluch-webring"
+  symbol = "○"
+
+# Ring-only settings, used by this repo's own templates.
+[params.gluch]
+  site = "https://gluch.org.mx/"
+  tagline = "Software libre · Chihuahua · Desde 1996"
+  joinIssue = "https://github.com/LinkSake/gluch-webring/issues/new?template=join.yml"
+  joinPR = "https://github.com/LinkSake/gluch-webring/edit/main/data/members.yaml"

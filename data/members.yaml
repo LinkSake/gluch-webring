@@ -1,0 +1,13 @@
+# Ring members, in ring order. New members go at the end.
+# Field reference: https://github.com/LinkSake/hugo-webring#using-it-in-a-ring
+
+- slug: luisangel
+  name: Luis Ángel Ortega
+  url: https://luisangel.me/es/
+  description: Desarrollador, escritor y poeta de la ciudad de Chihuahua.
+
+- slug: gluch
+  name: GLUCH
+  url: https://gluch.org.mx/
+  author: Grupo de Usuarios de Linux Chihuahua
+  description: Reuniones mensuales sobre Linux, software libre y código abierto desde 1996.
