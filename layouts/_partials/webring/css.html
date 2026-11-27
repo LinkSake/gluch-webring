@@ -1,0 +1,18 @@
+{{- /*
+  Overrides the module's partial to add this ring's own stylesheet (gluch.css)
+  after the module's theme.css and base.css.
+*/ -}}
+{{- $css := slice
+  (resources.Get "css/theme.css")
+  (resources.Get "css/base.css")
+  (resources.Get "css/gluch.css")
+  | resources.Concat "css/webring.css"
+-}}
+{{- if hugo.IsProduction -}}
+  {{- $css = $css | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- else -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end -}}
+<link rel="preload" href="{{ "fonts/oswald-latin-300-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/jetbrains-mono-latin-400-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>

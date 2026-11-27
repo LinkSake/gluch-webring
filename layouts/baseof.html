@@ -1,0 +1,44 @@
+{{- $ring := site.Params.webring.name | default site.Title -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ $ring }}{{ else }}{{ .Title }} · {{ $ring }}{{ end }}</title>
+  {{- with site.Params.webring.description }}
+  <meta name="description" content="{{ . }}">
+  <meta property="og:description" content="{{ . }}">
+  {{- end }}
+  <meta property="og:title" content="{{ $ring }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta name="theme-color" content="#121414">
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  {{ partial "webring/css.html" . }}
+</head>
+<body class="g">
+  <div class="g-frame" aria-hidden="true"></div>
+  <header class="g-nav">
+    <nav aria-label="{{ $ring }}">
+      <a href="{{ site.Params.gluch.site }}">GLUCH</a>
+      <a href="{{ "#miembros" | relURL }}">Miembros</a>
+      <a class="g-mark" href="{{ site.Home.RelPermalink }}" aria-label="{{ $ring }}">{{ partial "gluch/mark.html" . }}</a>
+      <a href="{{ "#unirte" | relURL }}">Unirte</a>
+      <a href="{{ site.Params.webring.repo }}">Repo</a>
+    </nav>
+  </header>
+  <main class="g-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer class="g-footer">
+    <div class="g-footer-row">
+      <p><strong>{{ $ring }}</strong><br>Grupo de Usuarios de Linux Chihuahua</p>
+      <p>
+        <a href="{{ site.Params.gluch.site }}">gluch.org.mx</a> ·
+        <a href="{{ site.Params.webring.repo }}">GitHub</a> ·
+        <a href="{{ "members.json" | relURL }}">members.json</a>
+      </p>
+    </div>
+    <p class="g-footer-fine">Hecho con hugo-webring · Software libre · Chihuahua, MX</p>
+  </footer>
+</body>
+</html>

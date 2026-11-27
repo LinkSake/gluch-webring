@@ -1,0 +1,119 @@
+{{ define "main" }}
+{{- $members := partial "webring/active-members.html" (hugo.Data.members | default slice) -}}
+{{- partial "webring/members-json.html" $members -}}
+{{- $ring := site.Params.webring.name | default site.Title -}}
+
+<section class="g-hero">
+  <div class="g-command">
+    <p class="g-command-text"><span class="g-dim">root@gluch ~ $</span> cat webring.txt<span class="g-cursor" aria-hidden="true">▌</span></p>
+    {{- if $members }}
+    <a class="g-command-action" href="{{ "random/" | relURL }}">Al azar <kbd>R</kbd></a>
+    {{- end }}
+  </div>
+
+  <p class="g-eyebrow">{{ site.Params.gluch.tagline }}</p>
+  <h1 class="g-title">{{ $ring }}</h1>
+  <p class="g-lead">{{ site.Params.webring.description }}</p>
+
+  <div class="g-actions">
+    {{- if $members }}
+    <a class="g-button g-button-solid" href="{{ "random/" | relURL }}">Sitio al azar</a>
+    {{- end }}
+    <a class="g-button" href="#unirte">Cómo unirte</a>
+  </div>
+</section>
+
+<section class="g-panel" aria-labelledby="que-es">
+  <div class="g-halftone" aria-hidden="true"></div>
+  <p class="g-panel-title" aria-hidden="true">La web libre, hecha en Chihuahua</p>
+  <div class="g-panel-grid">
+    <div>
+      <p class="g-label">Qué es</p>
+      <h2 id="que-es" class="g-heading">Sitios hechos a mano, enlazados en círculo</h2>
+      <div class="g-prose">{{ .Content }}</div>
+    </div>
+    <div class="g-ring-map" aria-label="Orden del anillo">
+      <p class="g-label">anillo.txt</p>
+      <ol>
+        {{- range $i, $m := $members }}
+        <li><span class="g-dim">{{ printf "%02d" (add $i 1) }}</span> {{ $m.slug }} <span class="g-dim">→</span></li>
+        {{- end }}
+        {{- if $members }}
+        <li class="g-ring-back"><span class="g-dim">↺</span> {{ (index $members 0).slug }}</li>
+        {{- end }}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="miembros" class="g-section" aria-labelledby="miembros-title">
+  <p class="g-label">Miembros</p>
+  <h2 id="miembros-title" class="g-heading">El anillo</h2>
+  {{- if $members }}
+  <ol class="g-cards">
+    {{- range $i, $m := $members }}
+    <li class="g-card" id="{{ $m.slug }}">
+      <p class="g-card-num">{{ printf "%02d" (add $i 1) }}</p>
+      <h3 class="g-card-name"><a href="{{ $m.url }}">{{ $m.name }}</a></h3>
+      {{- with $m.author }}
+      <p class="g-card-author">{{ . }}</p>
+      {{- end }}
+      {{- with $m.description }}
+      <p class="g-card-desc">{{ . }}</p>
+      {{- end }}
+      <p class="g-card-url"><a href="{{ $m.url }}">{{ strings.TrimSuffix "/" (strings.TrimPrefix "https://" $m.url) }} ↗</a></p>
+      <details class="g-widget">
+        <summary>{{ T "webring.widget" }}</summary>
+        <p>{{ T "webring.widgetHelp" }}</p>
+        <pre><code>{{ partial "webring/widget.html" $m | string }}</code></pre>
+      </details>
+    </li>
+    {{- end }}
+  </ol>
+  {{- else }}
+  <p>{{ T "webring.noMembers" }}</p>
+  {{- end }}
+</section>
+
+<section id="unirte" class="g-section g-join" aria-labelledby="unirte-title">
+  <p class="g-label">Unirte</p>
+  <h2 id="unirte-title" class="g-heading">Súmate al anillo</h2>
+  <div class="g-join-grid">
+    <div>
+      <h3 class="g-subheading">Requisitos</h3>
+      <ul class="g-list">
+        <li>Ser parte de la comunidad del GLUCH: ir a las reuniones o estar en el grupo.</li>
+        <li>Tener un sitio personal o de un proyecto, con contenido propio: blog, portafolio, wiki, jardín digital.</li>
+        <li>Servirlo con HTTPS.</li>
+        <li>Poner el widget del anillo en una página visible, de preferencia la principal.</li>
+        <li>Nada de spam ni sitios puramente comerciales.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="g-subheading">Pasos</h3>
+      <ol class="g-list g-list-num">
+        <li>Elige un <em>slug</em> corto para tu sitio (solo a-z, 0-9 y guiones).</li>
+        <li>Agrega tu sitio al final de <code>data/members.yaml</code> con un pull request, o llena el formulario si no usas GitHub.</li>
+        <li>Cuando se fusione, copia tu widget de esta página y pégalo en tu sitio.</li>
+      </ol>
+      <div class="g-actions g-actions-left">
+        <a class="g-button g-button-solid" href="{{ site.Params.gluch.joinPR }}">Abrir un pull request</a>
+        <a class="g-button" href="{{ site.Params.gluch.joinIssue }}">Llenar el formulario</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{- if $members }}
+<script>
+  // "R" jumps to a random member, like the hint in the command bar.
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "r" && e.key !== "R") return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    location.href = {{ "random/" | relURL }};
+  });
+</script>
+{{- end }}
+{{ end }}

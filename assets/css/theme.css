@@ -1,0 +1,27 @@
+/*
+  GLUCH Webring theme. One ink color on a dark ground, like a phosphor terminal.
+  The ink is GLUCH's own yellow (#f3e5ab, from gluch.org.mx).
+*/
+:root {
+  --webring-bg: #121414;
+  --webring-text: #f3e5ab;
+  --webring-text-muted: rgba(243, 229, 171, 0.64);
+  --webring-accent: #f3e5ab;
+  --webring-border: rgba(243, 229, 171, 0.18);
+  --webring-font: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --webring-width: 68rem;
+
+  --g-ink: #f3e5ab;
+  --g-ink-dim: rgba(243, 229, 171, 0.64);
+  --g-ink-faint: rgba(243, 229, 171, 0.18);
+  --g-bg: #121414;
+  --g-surface: #1b1d1d;
+  --g-panel: #2a2716;
+  --g-on-ink: #121414;
+  --g-display: "Oswald", "Bebas Neue", "Arial Narrow", sans-serif;
+  --g-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --g-frame: 4px;
+  --g-radius: 6px;
+
+  color-scheme: dark;
+}
